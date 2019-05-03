@@ -1,6 +1,5 @@
 module Lib
-    ( someFunc
-    , myAdd
+    ( myAdd
     , qsort
     , muln
     )
@@ -21,6 +20,3 @@ myAdd a b = a + b
 -- Warn: if source list in infinite, result is also infinite, so use take or something
 muln :: Num a => a -> [a] -> [a]
 muln n = foldr (\x acc -> x * n : acc) []
-
-someFunc :: IO ()
-someFunc = putStrLn $ "infinifold" ++ show (take 12 $ muln 2 [1 ..])
