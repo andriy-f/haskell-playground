@@ -20,7 +20,7 @@ myAdd a b = a + b
 -- Sample of using foldr on infinite list
 -- Warn: if source list in infinite, result is also infinite, so use take or something
 muln :: Num a => a -> [a] -> [a]
-muln n arr = foldr (\x acc -> x*n:acc) [] arr
+muln n arr = foldr (\x acc -> x * n : acc) [] arr
 
 someFunc :: IO ()
 someFunc =
@@ -29,7 +29,10 @@ someFunc =
         ++ show (myAdd 3 4)
         ++ "\n"
         ++ let arr2sort = [10, 2, 5, 3, 1, 6, 7, 4, 2, 3, 4, 8, 9]
-           in  "Qsort " ++ show arr2sort ++ ": " ++ show (qsort arr2sort)
-        ++ "\n"
-        ++ "infinifold"
-        ++ show (take 12 $ muln 2 [1..])
+           in  "Qsort "
+               ++ show arr2sort
+               ++ ": "
+               ++ show (qsort arr2sort)
+               ++ "\n"
+               ++ "infinifold"
+               ++ show (take 12 $ muln 2 [1 ..])
