@@ -21,3 +21,6 @@ spec = do
     describe "myAdd" $ do
         it "myAdd 1 + 1" $ myAdd 1 1 `shouldBe` (2 :: Int)
         it "myAdd 223 + 486" $ myAdd 223 486 `shouldBe` (709 :: Int)
+
+    describe "muln" $ do
+        it "muln take 12 $ muln 2 [1 ..] == 2,4,6,8,10" $ (take 5 $ muln 2 [1..]) `shouldBe` ([2,4,6,8,10] :: [Int])
