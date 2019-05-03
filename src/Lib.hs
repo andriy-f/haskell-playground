@@ -20,7 +20,7 @@ myAdd a b = a + b
 -- Sample of using foldr on infinite list
 -- Warn: if source list in infinite, result is also infinite, so use take or something
 muln :: Num a => a -> [a] -> [a]
-muln n arr = foldr (\x acc -> x * n : acc) [] arr
+muln n = foldr (\x acc -> x * n : acc) []
 
 someFunc :: IO ()
 someFunc = putStrLn $ "infinifold" ++ show (take 12 $ muln 2 [1 ..])
