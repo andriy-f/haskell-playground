@@ -13,7 +13,7 @@ RUN stack setup --resolver ghc-$GHC_V
 COPY app ./app
 COPY src ./src
 COPY test ./test
-COPY Setup.hs ./
+COPY Setup.hs README.md ChangeLog.md ./
 
 # Build
 RUN stack build --resolver ghc-$GHC_V
