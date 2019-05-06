@@ -1,6 +1,6 @@
 ARG GHC_V=8.6.4
 FROM andreus108/haskell:${GHC_V}
-ARG GHC_V=8.6.4
+ARG GHC_V
 
 WORKDIR /app
 
