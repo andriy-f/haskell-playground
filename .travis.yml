@@ -1,3 +1,7 @@
 language: haskell
 ghc:
   - "8.6.4"
+before_script:
+  - stack setup
+  - stack build
+script: stack test
