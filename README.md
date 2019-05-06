@@ -1,5 +1,7 @@
 # Haskell playground
 
+[![Build Status](https://travis-ci.org/andriy-f/haskell-playground.svg?branch=master)](https://travis-ci.org/andriy-f/haskell-playground)
+
 ## Development
 
 1. Set up
