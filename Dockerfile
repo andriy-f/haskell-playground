@@ -1,11 +1,11 @@
-ARG GHC_V=8.6.4
+ARG GHC_V=8.8.3
 FROM andreus108/haskell:${GHC_V}
 ARG GHC_V
 
 WORKDIR /app
 
-COPY stack.yaml ./
 COPY package.yaml ./
+COPY stack.yaml stack.yaml.lock ./
 
 # Install dependencies
 RUN stack setup --resolver ghc-$GHC_V
