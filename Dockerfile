@@ -1,5 +1,6 @@
+# Reminder: if you change version, change CMD accordingly
 ARG GHC_V=8.8.3
-FROM andreus108/haskell:${GHC_V}
+FROM haskell:${GHC_V}
 ARG GHC_V
 
 WORKDIR /app
@@ -18,4 +19,5 @@ COPY Setup.hs README.md ChangeLog.md ./
 # Build
 RUN stack build --resolver ghc-$GHC_V
 
+# ENV GHC_V=${GHC_V}
 CMD ["stack", "exec", "--resolver", "ghc-8.8.3", "playground-exe"]
