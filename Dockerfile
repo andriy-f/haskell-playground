@@ -18,4 +18,4 @@ COPY Setup.hs README.md ChangeLog.md ./
 # Build
 RUN stack build --resolver ghc-$GHC_V
 
-CMD ["stack", "exec", "--resolver", "ghc-8.6.4", "playground-exe"]
+CMD ["stack", "exec", "--resolver", "ghc-8.8.3", "playground-exe"]
