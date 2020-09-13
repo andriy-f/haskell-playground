@@ -1,3 +1,4 @@
 #!/bin/sh
 
+docker build -t haskell-playground .
 docker run -it --rm haskell-playground
