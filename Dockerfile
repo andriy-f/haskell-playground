@@ -19,5 +19,5 @@ COPY Setup.hs README.md ChangeLog.md ./
 # Build
 RUN stack build --resolver ghc-$GHC_V
 
-# ENV GHC_V=${GHC_V}
-CMD ["stack", "exec", "--resolver", "ghc-8.8.4", "playground-exe"]
+ENV GHC_V=${GHC_V}
+CMD exec stack exec --resolver ghc-$GHC_V playground-exe
