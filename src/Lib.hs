@@ -2,6 +2,7 @@ module Lib
     ( myAdd
     , qsort
     , muln
+    , pairs
     )
 where
 
@@ -20,3 +21,8 @@ myAdd a b = a + b
 -- Warn: if source list in infinite, result is also infinite, so use take or something
 muln :: Num a => a -> [a] -> [a]
 muln n = foldr (\x acc -> x * n : acc) []
+
+-- not something that was intended
+pairs :: (Num a) => (a -> a -> a) -> [a] -> [a]
+pairs f t = t
+pairs f (x:y:t) = f x y : pairs f t

@@ -24,3 +24,9 @@ spec = do
 
     describe "muln" $ do
         it "take 5 $ muln 2 [1..] == 2,4,6,8,10" $ (take 5 $ muln 2 [1..]) `shouldBe` ([2,4,6,8,10] :: [Int])
+
+    describe "pairs" $ do
+        it "pairs (+) [1]" $ pairs (+) [1] `shouldBe` [1]
+        it "pairs (+) [1,2]" $ pairs (+) [1, 2] `shouldBe` [1, 2]
+        it "pairs (+) [1,2,3]" $ pairs (+) [1, 2, 3] `shouldBe` [1, 2, 3]
+        it "pairs (+) [1,2,3,4]" $ pairs (+) [1,2,3,4] `shouldBe` [1,2,3,4]
