@@ -1,5 +1,6 @@
 module Lib
     ( myAdd
+    , add1
     , qsort
     , muln
     , pairs
@@ -13,6 +14,8 @@ qsort (x : xs) =
     let firstPartSorted  = qsort [ y | y <- xs, y <= x ]
         secondPartSorted = qsort [ y | y <- xs, y > x ]
     in  firstPartSorted ++ x : secondPartSorted
+
+add1 a = 1 + a
 
 myAdd :: Num a => a -> a -> a
 myAdd a b = a + b
