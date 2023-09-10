@@ -2,6 +2,7 @@ module LibSpec where
 
 import           Lib
 import           Test.Hspec
+import Lib (curryTest)
 
 spec :: Spec
 spec = do
@@ -30,3 +31,6 @@ spec = do
         it "pairs (+) [1,2]" $ pairs (+) [1, 2] `shouldBe` [1, 2]
         it "pairs (+) [1,2,3]" $ pairs (+) [1, 2, 3] `shouldBe` [1, 2, 3]
         it "pairs (+) [1,2,3,4]" $ pairs (+) [1,2,3,4] `shouldBe` [1,2,3,4]
+
+    describe "curryTest" $ do
+        it "curryTest 'a' 1" $ curryTest 'a' 1 `shouldBe` "a1"

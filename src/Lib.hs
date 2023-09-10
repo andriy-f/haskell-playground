@@ -3,6 +3,7 @@ module Lib
     , qsort
     , muln
     , pairs
+    , curryTest
     )
 where
 
@@ -25,4 +26,7 @@ muln n = foldr (\x acc -> x * n : acc) []
 -- not something that was intended
 pairs :: (Num a) => (a -> a -> a) -> [a] -> [a]
 pairs f t = t
-pairs f (x:y:t) = f x y : pairs f t
+-- pairs f (x:y:t) = f x y : pairs f t
+
+curryTest :: (Show b) => Char -> b -> [Char]
+curryTest a b = a : show b
