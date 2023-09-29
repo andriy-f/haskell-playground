@@ -39,7 +39,7 @@ executables:
 tests:
   playground-test:
     main:                Spec.hs
-    source-dirs:         src/test
+    source-dirs:         test
     ghc-options:
     - -threaded
     - -rtsopts
