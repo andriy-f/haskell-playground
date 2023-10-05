@@ -1,11 +1,12 @@
 module PlayTypesSpec where
 
-import PlayTypes (AnimalL, AnimalR, MyVector2D, animalName)
+import PlayTypes (AnimalL, AnimalR, MyVector2D, animalLDefault, animalLName, animalRDefault, animalRName)
 import Test.Hspec (Spec, describe, it, shouldBe)
 
 spec :: Spec
 spec = do
-  describe "Animal" $ do
-    -- let an0 = (AnimalL "Beaver" 4 1)
-    it "Should compile" $ 0 `shouldBe` 0
-    it "Animal assign" $ let anName = "Beaver" in anName `shouldBe` "Beaver"
+  describe "AnimalL" $ do
+    it "AnimalL assign" $ let an0 = animalLDefault "Beaver" in animalLName an0 `shouldBe` "Beaver"
+
+  describe "AnimalR" $ do
+    it "assign" $ let an0 = animalRDefault "Beaver" in animalRName an0 `shouldBe` "Beaver"
