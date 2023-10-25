@@ -1,5 +1,7 @@
 module PlayTypes
   ( MyVector2D (..),
+    getVector2Dx,
+    getVector2Dy,
     Vector3D (..),
     vPlus,
     AnimalL,
@@ -14,12 +16,19 @@ where
 
 data MyVector2D = MyVector2D Int Int deriving (Show)
 
+getVector2Dx (MyVector2D x _) = x
+
+getVector2Dy (MyVector2D _ y) = y
+
+vPlus2D :: MyVector2D -> MyVector2D -> MyVector2D
+vPlus2D (MyVector2D x y) (MyVector2D a b) = MyVector2D (x + a) (y + b)
+
 -- Can be Int, Integer, Double (change name)
 data Vector3D a = Vector3D a a a deriving (Show)
 
 vPlus :: (Num a) => Vector3D a -> Vector3D a -> Vector3D a
-(Vector3D x1 y1 z1) `vPlus` (Vector3D x2 y2 z2) = Vector3D (x1+x2) (y1+y2) (z1+z2)
 -- vPlus (Vector3D x1 y1 z1) (Vector3D x2 y2 z2) = Vector3D (x1 + x2) (y1 + y2) (z1 + z2)
+(Vector3D x1 y1 z1) `vPlus` (Vector3D x2 y2 z2) = Vector3D (x1 + x2) (y1 + y2) (z1 + z2)
 
 data AnimalL = AnimalL String Int Int deriving (Show)
 
