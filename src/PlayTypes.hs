@@ -14,6 +14,8 @@ module PlayTypes
   )
 where
 
+import qualified Data.Map as Map
+
 data MyVector2D = MyVector2D Int Int deriving (Show)
 
 getVector2Dx (MyVector2D x _) = x
@@ -71,3 +73,26 @@ animalRDefault nameVal = AnimalR {name = nameVal, numOfLegs = 4, numOfTails = 1}
 
 animalRName :: AnimalR -> String
 animalRName = name
+
+data Day = Monday | Tuesday | Wednesday | Thursday | Friday | Saturday | Sunday
+           deriving (Eq, Ord, Show, Read, Bounded, Enum)
+
+type PhoneNumber = String
+type Name = String
+type AssocList k v = [(k, v)]
+
+type PhoneBook = [(Name,PhoneNumber)]
+-- OR
+type PhoneBook2 = AssocList Name PhoneNumber
+
+type IntMap = Map.Map Int
+
+--  Cons is constructor
+data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)
+
+-- Alternative
+data List' a = Empty | Cons { listHead :: a, listTail :: List' a} deriving (Show, Read, Eq, Ord)
+
+-- :-: is like Cons
+infixr 5 :-:
+data List'' a = Empty | a :-: (List'' a) deriving (Show, Read, Eq, Ord)
