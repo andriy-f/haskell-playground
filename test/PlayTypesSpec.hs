@@ -10,6 +10,7 @@ spec = do
 
   describe "AnimalR" $ do
     it "assign" $ let an0 = AnimalR {name = "Bear", numOfLegs = 4, numOfTails = 1} in animalRName an0 `shouldBe` "Bear"
+    it "assign and check prop" $ let an0 = AnimalR {name = "Bear", numOfLegs = 4, numOfTails = 1} in name an0 `shouldBe` "Bear"
 
   describe "MyVector2D" $ do
     it "assign and get x" $ let v1 = MyVector2D 1 2 in getVector2Dx v1 `shouldBe` 1
