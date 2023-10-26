@@ -6,6 +6,8 @@ import Test.Hspec (Spec, describe, it, shouldBe)
 spec :: Spec
 spec = do
   describe "Insert" $ do
+    it "Construct from list" $
+      foldr treeInsert EmptyTree [8,6,4,1,7,3,5] `shouldBe` Node 5 (Node 3 (Node 1 EmptyTree EmptyTree) (Node 4 EmptyTree EmptyTree)) (Node 7 (Node 6 EmptyTree EmptyTree) (Node 8 EmptyTree EmptyTree))
     it "Insert into " $
       let
         --  3
