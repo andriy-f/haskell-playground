@@ -91,8 +91,8 @@ type IntMap = Map.Map Int
 data List a = Empty | Cons a (List a) deriving (Show, Read, Eq, Ord)
 
 -- Alternative
-data List' a = Empty | Cons { listHead :: a, listTail :: List' a} deriving (Show, Read, Eq, Ord)
+data List' a = Empty' | Cons' { listHead :: a, listTail :: List' a} deriving (Show, Read, Eq, Ord)
 
 -- :-: is like Cons
 infixr 5 :-:
-data List'' a = Empty | a :-: (List'' a) deriving (Show, Read, Eq, Ord)
+data List'' a = Empty'' | a :-: (List'' a) deriving (Show, Read, Eq, Ord)
