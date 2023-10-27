@@ -1,4 +1,5 @@
 module MyFunctor where
+import BinaryTreeModule (BinaryTree(..))
 
 -- f is not concrete type but type constructor
 -- (a -> b) is a function
@@ -13,3 +14,7 @@ instance MyFunctor Maybe where
 -- Here [] is a type constructor for lists
 instance MyFunctor [] where
   fMap = map
+
+instance MyFunctor BinaryTree where
+  fMap f EmptyTree = EmptyTree
+  fMap f (Node x left right) = Node (f x) (fMap f left) (fMap f right)
