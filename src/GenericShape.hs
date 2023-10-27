@@ -3,15 +3,17 @@ module GenericShape where
 -- class (Floating t) => Shape a where
 --   area :: a -> t
 
--- use most precise Floating number for area
+-- a - type constructor
+-- (a t) - concrete type
+-- t - concrete type
 class Shape a where
-  area :: a -> Double
+  area :: (Floating t) => a t -> t
+  perimeter :: (Floating t) => a t -> t
 
+-- Circle is a type constructor
 data Circle a = Circle a a a
--- data Circle a = Circle {x1 :: a, y1 :: a, radius :: a}
 
--- instance (Floating t) => Shape (Circle t) where
-  -- area (Circle _ _ r) = pi * r ^ 2
-
-anArea :: (Floating t) => Circle t -> t
-anArea (Circle _ _ r) = pi * r ^ 2
+-- Type constructor Circle is an instance of type class Shape
+instance Shape Circle where
+  area (Circle _ _ r) = pi * r ^ 2
+  perimeter (Circle _ _ r) = 2 * pi * r
