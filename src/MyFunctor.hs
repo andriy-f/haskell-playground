@@ -1,4 +1,7 @@
 module MyFunctor where
+
+import qualified Data.Map as Map
+
 import BinaryTreeModule (BinaryTree(..))
 
 -- f is not concrete type but type constructor
@@ -18,3 +21,10 @@ instance MyFunctor [] where
 instance MyFunctor BinaryTree where
   fMap f EmptyTree = EmptyTree
   fMap f (Node x left right) = Node (f x) (fMap f left) (fMap f right)
+
+instance MyFunctor (Either a) where
+  fMap f (Right x) = Right (f x)
+  fMap f (Left x) = Left x
+
+instance MyFunctor (Map.Map k) where
+  fMap = Map.map
