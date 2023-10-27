@@ -1,8 +1,5 @@
 module GenericShape where
 
--- class (Floating t) => Shape a where
---   area :: a -> t
-
 -- a - type constructor
 -- (a t) - concrete type
 -- t - concrete type
