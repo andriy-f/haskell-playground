@@ -15,4 +15,4 @@ main = do
   putStrLn "Result of adding those vectors:"
   let v1 = Vector3D (read x1) (read y1) (read z1)
       v2 = Vector3D (read x2) (read y2) (read z2)
-   in putStrLn ("Vector plus" ++ show (vPlus v1 v2))
+   in putStrLn (show (vPlus v1 v2))
