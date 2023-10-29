@@ -3,7 +3,7 @@ module Main where
 import PlayTypes (Vector3D (..), vPlus)
 
 main :: IO ()
-main = vectorAddingIO
+main = wordReversingIO
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -18,3 +18,15 @@ vectorAddingIO = do
   let v1 = Vector3D (read x1) (read y1) (read z1)
       v2 = Vector3D (read x2) (read y2) (read z2)
    in putStrLn (show (vPlus v1 v2))
+
+wordReversingIO = do
+  putStrLn "Enter a sentence to reverse:"
+  line <- getLine
+  if null line
+    then return ()
+    else do
+      putStrLn $ reverseWords line
+      main
+
+reverseWords :: String -> String
+reverseWords = unwords . map reverse . words
