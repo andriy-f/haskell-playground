@@ -1,9 +1,10 @@
 module Main where
 
+import Control.Monad (when)
 import PlayTypes (Vector3D (..), vPlus)
 
 main :: IO ()
-main = wordReversingIO
+main = charReadWithPromptIO
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -17,7 +18,7 @@ vectorAddingIO = do
   putStrLn "Result of adding those vectors:"
   let v1 = Vector3D (read x1) (read y1) (read z1)
       v2 = Vector3D (read x2) (read y2) (read z2)
-   in putStrLn (show (vPlus v1 v2))
+   in print (vPlus v1 v2)
 
 wordReversingIO = do
   putStrLn "Enter a sentence to reverse:"
@@ -31,10 +32,12 @@ wordReversingIO = do
 reverseWords :: String -> String
 reverseWords = unwords . map reverse . words
 
+charReadWithPromptIO = do
+  putStrLn "Enter characters:"
+  charReadIO
+
 charReadIO = do
   c <- getChar
-  if c /= ' '
-    then do
-      putChar c
-      main
-    else return ()
+  when (c /= ' ') $ do
+    putChar c
+    charReadIO
