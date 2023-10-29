@@ -52,3 +52,24 @@ instance YesNo TrafficLight where
 
 yesNoIf :: (YesNo y) => y -> a -> a -> a
 yesNoIf yesNoVal yesResult noResult = if yesNo yesNoVal then yesResult else noResult
+
+-- (j a) is concrete type, a is concrete type,
+-- so this means that j has type * -> *
+--
+-- (t a j) is concrete type, a is concrete type, j has type * -> *,
+-- so this means that t has kind * -> (* -> *) -> *
+class Tofu t where
+  tofu :: j a -> t a j
+
+data Frank a b = Frank {frankField :: b a} deriving (Show)
+
+-- :t Frank {frankField = Just "Ha"}
+-- Frank {frankField = Just "Ha"} :: Frank [Char] Maybe
+instance Tofu Frank where
+  tofu x = Frank x
+
+-- Let's make it type of Funtor
+data Barry t k p = Barry {yabba :: p, dabba :: t k}
+
+instance Functor (Barry a b) where
+  fmap f (Barry {yabba = x, dabba = y}) = Barry {yabba = f x, dabba = y}
