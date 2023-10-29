@@ -3,7 +3,9 @@ module Main where
 import PlayTypes (Vector3D (..), vPlus)
 
 main :: IO ()
-main = do
+main = vectorAddingIO
+
+vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
   x1 <- getLine
   y1 <- getLine
