@@ -30,3 +30,11 @@ wordReversingIO = do
 
 reverseWords :: String -> String
 reverseWords = unwords . map reverse . words
+
+charReadIO = do
+  c <- getChar
+  if c /= ' '
+    then do
+      putChar c
+      main
+    else return ()
