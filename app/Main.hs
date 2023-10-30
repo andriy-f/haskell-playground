@@ -1,9 +1,10 @@
 module Main where
 
-import Control.Monad (forM, mapM, when)
+import Control.Monad (forever, forM, mapM, when)
+import Data.Char (toUpper)
 import PlayTypes (Vector3D (..), vPlus)
 
-main = get3ColorsV2
+main = capsLockerIO
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -40,6 +41,11 @@ charReadIO = do
   when (c /= ' ') $ do
     putChar c
     charReadIO
+
+capsLockerIO = forever $ do
+    putStr "Give me some input: "
+    l <- getLine
+    putStrLn $ map toUpper l
 
 get3Colors = do
   colors <-
