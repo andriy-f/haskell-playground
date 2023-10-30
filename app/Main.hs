@@ -1,10 +1,9 @@
 module Main where
 
-import Control.Monad (when)
+import Control.Monad (forM, mapM, when)
 import PlayTypes (Vector3D (..), vPlus)
 
-main :: IO ()
-main = charReadWithPromptIO
+main = get3ColorsV2
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -27,7 +26,7 @@ wordReversingIO = do
     then return ()
     else do
       putStrLn $ reverseWords line
-      main
+      wordReversingIO
 
 reverseWords :: String -> String
 reverseWords = unwords . map reverse . words
@@ -41,3 +40,25 @@ charReadIO = do
   when (c /= ' ') $ do
     putChar c
     charReadIO
+
+get3Colors = do
+  colors <-
+    forM
+      [1, 2, 3, 4]
+      ( \a -> do
+          putStrLn $ "Which color do you associate with the number " ++ show a ++ "?"
+          getLine
+      )
+  putStrLn "The colors that you associate with 1, 2, 3 and 4 are: "
+  mapM putStrLn colors
+
+get3ColorsV2 = do
+  colors <-
+    mapM
+      ( \a -> do
+          putStrLn $ "Which color do you associate with the number " ++ show a ++ "?"
+          getLine
+      )
+      [1, 2, 3, 4]
+  putStrLn "The colors that you associate with 1, 2, 3 and 4 are: "
+  mapM putStrLn colors
