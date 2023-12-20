@@ -3,8 +3,9 @@ module Main where
 import Control.Monad (forM, forever, mapM, when)
 import Data.Char (toUpper)
 import PlayTypes (Vector3D (..), vPlus)
+import Text.ParserCombinators.ReadP (get)
 
-main = capsLockerIOV2
+main = getCharDemoWithPrompt
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -52,6 +53,18 @@ capsLockerIOV2 = do
   putStrLn "Press Ctrl+D to exit."
   contents <- getContents
   putStr (map toUpper contents)
+
+getCharDemoWithPrompt = do
+  putStrLn "Enter a character(s):"
+  getCharDemo
+
+getCharDemo = do
+  c <- getChar
+  if c /= ' '
+    then do
+      putChar c
+      getCharDemo
+    else return ()
 
 get3Colors = do
   colors <-
