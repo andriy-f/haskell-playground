@@ -55,8 +55,8 @@ capsLockerIOV2 = do
   putStr (map toUpper contents)
 
 getCharDemoWithPrompt = do
-  putStrLn "Enter a character(s):"
-  getCharDemo
+  putStrLn "Enter character(s), mixed with spaces:"
+  getCharDemoV2
 
 getCharDemo = do
   c <- getChar
@@ -65,6 +65,12 @@ getCharDemo = do
       putChar c
       getCharDemo
     else return ()
+
+getCharDemoV2 = do
+  c <- getChar
+  when (c /= ' ') $ do
+      putChar c
+      getCharDemoV2
 
 get3Colors = do
   colors <-
