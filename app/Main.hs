@@ -48,7 +48,8 @@ capsLockerIO = forever $ do
   putStrLn $ map toUpper l
 
 capsLockerIOV2 = do
-  -- putStrLn "Give me some input: "
+  putStrLn "Enter some text and press Enter to see it in all caps:"
+  putStrLn "Press Ctrl+D to exit."
   contents <- getContents
   putStr (map toUpper contents)
 
