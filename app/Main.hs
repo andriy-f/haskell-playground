@@ -5,7 +5,7 @@ import Data.Char (toUpper)
 import PlayTypes (Vector3D (..), vPlus)
 import Text.ParserCombinators.ReadP (get)
 
-main = getCharDemoWithPrompt
+main = forMapDemo
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -54,6 +54,18 @@ capsLockerIOV2 = do
   contents <- getContents
   putStr (map toUpper contents)
 
+forMapDemo = do
+  colors <-
+    forM
+      [1, 2, 3, 4]
+      ( \a -> do
+          putStrLn $ "Which color do you associate with the number " ++ show a ++ "?"
+          color <- getLine
+          return color
+      )
+  putStrLn "The colors that you associate with 1, 2, 3 and 4 are: "
+  mapM putStrLn colors
+
 getCharDemoWithPrompt = do
   putStrLn "Enter character(s), mixed with spaces:"
   getCharDemoV2
@@ -69,8 +81,8 @@ getCharDemo = do
 getCharDemoV2 = do
   c <- getChar
   when (c /= ' ') $ do
-      putChar c
-      getCharDemoV2
+    putChar c
+    getCharDemoV2
 
 get3Colors = do
   colors <-
