@@ -5,7 +5,7 @@ import Data.Char (toUpper)
 import PlayTypes (Vector3D (..), vPlus)
 import Text.ParserCombinators.ReadP (get)
 
-main = capsLockerSilent
+main = shortLinesIO
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -57,6 +57,19 @@ capsLockerIOV2 = do
 capsLockerSilent = do
   contents <- getContents
   putStr (map toUpper contents)
+
+-- This works lazily,
+-- so if usind stdin, it will print result after each input line
+shortLinesIO = do
+  input <- getContents
+  putStr (shortLinesOnly input)
+
+shortLinesOnly :: String -> String
+shortLinesOnly input =
+  let linesArray = lines input
+      shortLines = filter (\ln -> length ln < 10) linesArray
+      shortLinesConcatenated = unlines shortLines
+   in shortLinesConcatenated
 
 forMapDemo = do
   colors <-
