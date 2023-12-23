@@ -5,7 +5,7 @@ import Data.Char (toUpper)
 import PlayTypes (Vector3D (..), vPlus)
 import Text.ParserCombinators.ReadP (get)
 
-main = forMapDemo
+main = capsLockerSilent
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -51,6 +51,10 @@ capsLockerIO = forever $ do
 capsLockerIOV2 = do
   putStrLn "Enter some text and press Enter to see it in all caps:"
   putStrLn "Press Ctrl+D to exit."
+  contents <- getContents
+  putStr (map toUpper contents)
+
+capsLockerSilent = do
   contents <- getContents
   putStr (map toUpper contents)
 
