@@ -64,6 +64,8 @@ shortLinesIO = do
   input <- getContents
   putStr (shortLinesOnly input)
 
+shortLinesIOV2 = interact shortLinesOnly
+
 shortLinesOnly :: String -> String
 shortLinesOnly input =
   let linesArray = lines input
