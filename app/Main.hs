@@ -5,7 +5,7 @@ import Data.Char (toUpper)
 import PlayTypes (Vector3D (..), vPlus)
 import Text.ParserCombinators.ReadP (get)
 
-main = shortLinesIO
+main = responsPalindromeStatusIO
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -124,3 +124,11 @@ get3ColorsV2 = do
       [1, 2, 3, 4]
   putStrLn "The colors that you associate with 1, 2, 3 and 4 are: "
   mapM putStrLn colors
+
+responsPalindromeStatusIO = interact respondPalindromeStatus
+
+respondPalindromeStatus = unlines . map isPalindromeTextual . lines
+
+isPalindromeTextual line = if isPalindrome line then "Pal" else "Not pal"
+
+isPalindrome xs = xs == reverse xs
