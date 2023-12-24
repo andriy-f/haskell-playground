@@ -1,11 +1,13 @@
 module Main where
 
+import System.IO (IOMode (ReadMode), hClose, hGetContents, openFile)
+
 import Control.Monad (forM, forever, mapM, when)
 import Data.Char (toUpper)
 import PlayTypes (Vector3D (..), vPlus)
 import Text.ParserCombinators.ReadP (get)
 
-main = responsPalindromeStatusIO
+main = readAndPrintFile
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -132,3 +134,9 @@ respondPalindromeStatus = unlines . map isPalindromeTextual . lines
 isPalindromeTextual line = if isPalindrome line then "Pal" else "Not pal"
 
 isPalindrome xs = xs == reverse xs
+
+readAndPrintFile = do
+  handle <- openFile "mantra.txt" ReadMode
+  contents <- hGetContents handle
+  putStr contents
+  hClose handle
