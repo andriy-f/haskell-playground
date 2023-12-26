@@ -127,7 +127,7 @@ get3ColorsV2 = do
   putStrLn "The colors that you associate with 1, 2, 3 and 4 are: "
   mapM putStrLn colors
 
-responsPalindromeStatusIO = interact respondPalindromeStatus
+respondPalindromeStatusIO = interact respondPalindromeStatus
 
 respondPalindromeStatus = unlines . map isPalindromeTextual . lines
 
