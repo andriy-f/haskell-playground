@@ -165,7 +165,7 @@ todoEditorIO = do
   fileExist <- doesFileExist todoFileName
   if fileExist then do
     oldContent <- readFile todoFileName
-    putStrLn $ "These are your TO-DO items:\n" ++ oldContent
+    putStrLn $ "These are your TO-DO items:\n" ++ addLineNumbers oldContent
   else writeFile todoFileName ""
   forever $ do
     putStrLn "What do you want to do next? (add / remove / print / exit)"
@@ -187,6 +187,12 @@ todoEditorIO = do
         writeFile todoFileName newContent
       "print" -> do
         content <- readFile todoFileName
-        putStrLn $ "These are your TO-DO items:\n" ++ content
+        putStrLn $ "These are your TO-DO items:\n" ++ addLineNumbers content
       "exit" -> return ()
       _ -> putStrLn "Unknown command"
+
+addLineNumbers contents =
+  let
+    list = lines contents
+    newList = zipWith (\n line -> show n ++ ". " ++ line) [0..] list
+  in unlines newList
