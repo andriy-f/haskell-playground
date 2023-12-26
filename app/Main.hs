@@ -1,13 +1,12 @@
 module Main where
 
-import System.IO (IOMode (ReadMode), hClose, hGetContents, openFile)
-
 import Control.Monad (forM, forever, mapM, when)
 import Data.Char (toUpper)
 import PlayTypes (Vector3D (..), vPlus)
+import System.IO (IOMode (ReadMode), hClose, hGetContents, openFile, withFile)
 import Text.ParserCombinators.ReadP (get)
 
-main = readAndPrintFile
+main = readAndPrintFileV2
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -140,3 +139,12 @@ readAndPrintFile = do
   contents <- hGetContents handle
   putStr contents
   hClose handle
+
+readAndPrintFileV2 = do
+  withFile
+    "mantra.txt"
+    ReadMode
+    ( \handle -> do
+        contents <- hGetContents handle
+        putStr contents
+    )
