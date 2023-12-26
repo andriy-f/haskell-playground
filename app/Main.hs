@@ -184,7 +184,8 @@ todoEditorIO = do
           oldTodos = lines oldContent
           newTodos = delete (oldTodos !! number) oldTodos
           newContent = unlines newTodos
-        writeFile todoFileName newContent
+        writeFile (todoFileName ++ ".new") newContent
+        renameFile (todoFileName ++ ".new") todoFileName
       "print" -> do
         content <- readFile todoFileName
         putStrLn $ "These are your TO-DO items:\n" ++ addLineNumbers content
