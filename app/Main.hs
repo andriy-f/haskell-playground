@@ -6,7 +6,7 @@ import PlayTypes (Vector3D (..), vPlus)
 import System.IO (IOMode (ReadMode), hClose, hGetContents, openFile, withFile)
 import Text.ParserCombinators.ReadP (get)
 
-main = readAndPrintFileV2
+main = todoRoutineIO
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -148,3 +148,11 @@ readAndPrintFileV2 = do
         contents <- hGetContents handle
         putStr contents
     )
+
+todoRoutineIO = do
+  existingTodos <- readFile "todos.txt"
+  putStrLn $ "These are your TO-DO items:\n" ++ existingTodos
+  putStrLn "What do you want to do next?"
+  newTodos <- getContents
+  appendFile "todos.txt" newTodos
+  return ()

@@ -1,0 +1,7 @@
+print
+go for a walk
+rest
+make food
+
+
+newtask
