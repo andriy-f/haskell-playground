@@ -2,11 +2,14 @@ module Main where
 
 import Control.Monad (forM, forever, mapM, when)
 import Data.Char (toUpper)
+import Data.List (delete)
 import PlayTypes (Vector3D (..), vPlus)
-import System.IO (IOMode (ReadMode), hClose, hGetContents, openFile, withFile)
+import System.IO (IOMode (ReadMode, WriteMode), hClose,
+  hGetContents, openFile, withFile)
+import System.Directory (renameFile, removeFile, doesFileExist)
 import Text.ParserCombinators.ReadP (get)
 
-main = todoRoutineIO
+main = todoEditorIO
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -156,3 +159,34 @@ todoRoutineIO = do
   newTodos <- getContents
   appendFile "todos.txt" newTodos
   return ()
+
+todoEditorIO = do
+  let todoFileName = "todos.txt"
+  fileExist <- doesFileExist todoFileName
+  if fileExist then do
+    oldContent <- readFile todoFileName
+    putStrLn $ "These are your TO-DO items:\n" ++ oldContent
+  else writeFile todoFileName ""
+  forever $ do
+    putStrLn "What do you want to do next? (add / remove / print / exit)"
+    command <- getLine
+    case command of
+      "add" -> do
+        putStrLn "Enter a new TO-DO item:"
+        todoItem <- getLine
+        appendFile todoFileName (todoItem ++ "\n")
+      "remove" -> do
+        putStrLn "Enter the number of item to remove:"
+        numberString <- getLine
+        oldContent <- readFile todoFileName
+        let
+          number = read numberString
+          oldTodos = lines oldContent
+          newTodos = delete (oldTodos !! number) oldTodos
+          newContent = unlines newTodos
+        writeFile todoFileName newContent
+      "print" -> do
+        content <- readFile todoFileName
+        putStrLn $ "These are your TO-DO items:\n" ++ content
+      "exit" -> return ()
+      _ -> putStrLn "Unknown command"
