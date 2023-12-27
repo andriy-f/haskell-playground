@@ -1,7 +1,8 @@
 module Todos (main) where
 
-import Data.List (lookup)
+import Data.List (lookup, delete)
 import System.Environment (getArgs)
+import System.Directory (renameFile)
 
 main = do
   putStrLn "Welcome to todos app"
@@ -14,6 +15,7 @@ dispatch :: [(String, [String] -> IO ())]
 dispatch =
   [ ("view", viewAction),
     ("add", addAction),
+    ("remove", removeAction),
     ("help", unknowsAction)
   ]
 
@@ -41,3 +43,13 @@ viewAction args = do
 addAction (fileName : task : _) = do
   putStrLn ("Adding todo '" ++ task ++ "' to '" ++ fileName ++ "'...")
   appendFile fileName (task ++ "\n")
+
+removeAction [fileName, taskNumStr] = do
+  putStrLn ("Removing todo #" ++ taskNumStr ++ " from '" ++ fileName ++ "'...")
+  tasksAsString <- readFile fileName
+  let tasks = lines tasksAsString
+      taskNum = read taskNumStr
+      newTasks = delete (tasks !! taskNum) tasks
+      newTasksAsString = unlines newTasks
+  writeFile (fileName ++ ".new") newTasksAsString
+  renameFile (fileName ++ ".new") fileName
