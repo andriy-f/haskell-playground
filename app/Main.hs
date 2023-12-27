@@ -8,9 +8,10 @@ import System.IO (IOMode (ReadMode, WriteMode), hClose,
   hGetContents, openFile, withFile)
 import System.Environment (getArgs, getProgName)
 import System.Directory (renameFile, removeFile, doesFileExist)
-import Text.ParserCombinators.ReadP (get)
 
-main = getProgramInfo
+import qualified Todos
+
+main = Todos.main
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
