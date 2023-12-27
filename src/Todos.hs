@@ -33,7 +33,10 @@ helpAction = do
 viewAction :: [String] -> IO ()
 viewAction args = do
   putStrLn "Viewing todos"
-  readFile (head args) >>= putStrLn
+  tasksAsString <- readFile (head args)
+  let tasks = lines tasksAsString
+      tasksWithNumbers = zipWith (\n line -> show n ++ " - " ++ line) [0 ..] tasks
+  putStrLn (unlines tasksWithNumbers)
 
 addAction (fileName : task : _) = do
   putStrLn ("Adding todo '" ++ task ++ "' to '" ++ fileName ++ "'...")
