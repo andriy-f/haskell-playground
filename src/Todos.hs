@@ -12,7 +12,7 @@ main = do
   action args
 
 dispatch :: [(String, [String] -> IO ())]
-dispatch = [("view", view), ("help", unknowsAction)]
+dispatch = [("view", viewAction), ("help", unknowsAction)]
 
 getActionOrDefault :: Maybe ([String] -> IO ()) -> ([String] -> IO ())
 getActionOrDefault (Just action) = action
@@ -27,7 +27,7 @@ helpAction = do
   putStrLn "Usage: todos <command> <filename>"
   putStrLn "i.e: todos view todos.txt"
 
-view :: [String] -> IO ()
-view args = do
+viewAction :: [String] -> IO ()
+viewAction args = do
   putStrLn "Viewing todos"
-  putStrLn $ "Args:" ++ unlines args
+  readFile (head args) >>= putStrLn
