@@ -6,13 +6,16 @@ import System.Environment (getArgs)
 main = do
   putStrLn "Welcome to todos app"
   (command : args) <- getArgs
-  let
-    maybeAction = lookup command dispatch
-    action = getActionOrDefault maybeAction
+  let maybeAction = lookup command dispatch
+      action = getActionOrDefault maybeAction
   action args
 
 dispatch :: [(String, [String] -> IO ())]
-dispatch = [("view", viewAction), ("help", unknowsAction)]
+dispatch =
+  [ ("view", viewAction),
+    ("add", addAction),
+    ("help", unknowsAction)
+  ]
 
 getActionOrDefault :: Maybe ([String] -> IO ()) -> ([String] -> IO ())
 getActionOrDefault (Just action) = action
@@ -31,3 +34,7 @@ viewAction :: [String] -> IO ()
 viewAction args = do
   putStrLn "Viewing todos"
   readFile (head args) >>= putStrLn
+
+addAction (fileName : task : _) = do
+  putStrLn ("Adding todo '" ++ task ++ "' to '" ++ fileName ++ "'...")
+  appendFile fileName (task ++ "\n")
