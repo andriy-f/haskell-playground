@@ -6,10 +6,11 @@ import Data.List (delete)
 import PlayTypes (Vector3D (..), vPlus)
 import System.IO (IOMode (ReadMode, WriteMode), hClose,
   hGetContents, openFile, withFile)
+import System.Environment (getArgs, getProgName)
 import System.Directory (renameFile, removeFile, doesFileExist)
 import Text.ParserCombinators.ReadP (get)
 
-main = todoEditorIO
+main = getProgramInfo
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -197,3 +198,11 @@ addLineNumbers contents =
     list = lines contents
     newList = zipWith (\n line -> show n ++ ". " ++ line) [0..] list
   in unlines newList
+
+getProgramInfo = do
+  args <- getArgs
+  progName <- getProgName
+  putStrLn "The arguments are:"
+  mapM putStrLn args
+  putStrLn "The program name is:"
+  putStrLn progName
