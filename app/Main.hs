@@ -10,8 +10,9 @@ import System.Environment (getArgs, getProgName)
 import System.Directory (renameFile, removeFile, doesFileExist)
 
 import qualified Todos
+import qualified Randomization
 
-main = Todos.main
+main = Randomization.main
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
