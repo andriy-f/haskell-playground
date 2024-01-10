@@ -3,6 +3,7 @@ module Randomization (main) where
 import System.Random
   ( Random,
     RandomGen,
+    StdGen,
     getStdGen,
     mkStdGen,
     random,
@@ -16,7 +17,8 @@ main = do
   putStrLn "Enter lenght of pass to generate:"
   numberStr <- getLine
   let number = read numberStr :: Int
-  res <- generatePassword number ('a', '0')
+  gen <- getStdGen
+  let res = generatePassword number ('0', '9') gen
 
   putStrLn ("Result: " ++ show res)
 
@@ -33,7 +35,5 @@ getFiniteRandoms n g =
       (randomsNminus1, gFinal) = getFiniteRandoms (n - 1) gNew
    in (r : randomsNminus1, gFinal)
 
-generatePassword :: Int -> (Char, Char) -> IO String
-generatePassword n (min, max) = do
-  gen <- getStdGen
-  return (take n $ randomRs (min, max) gen)
+generatePassword :: Int -> (Char, Char) -> StdGen -> String
+generatePassword n (min, max) gen = take n $ randomRs (min, max) gen
