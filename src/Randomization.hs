@@ -1,16 +1,24 @@
 module Randomization (main) where
 
-import System.Random (Random, RandomGen, mkStdGen, getStdGen,
-  random, randoms, randomR, randomRs)
+import System.Random
+  ( Random,
+    RandomGen,
+    getStdGen,
+    mkStdGen,
+    random,
+    randomR,
+    randomRs,
+    randoms,
+  )
 
 main = do
   putStrLn "Welcome to randomization app"
-  putStrLn "Enter number of randoms to generate:"
+  putStrLn "Enter lenght of pass to generate:"
   numberStr <- getLine
   let number = read numberStr :: Int
-      myRandomNumbers = take number (getRandoms (mkStdGen 42) :: [Int])
+  res <- generatePassword number ('a', '0')
 
-  putStrLn ("Your randoms: " ++ show myRandomNumbers)
+  putStrLn ("Result: " ++ show res)
 
 -- get infinite list of randoms [a] from a seed g
 getRandoms :: (Random a, RandomGen g) => g -> [a]
@@ -25,7 +33,7 @@ getFiniteRandoms n g =
       (randomsNminus1, gFinal) = getFiniteRandoms (n - 1) gNew
    in (r : randomsNminus1, gFinal)
 
-generatePassword :: Int -> String
-generatePassword n =
-  let (randoms, _) = getFiniteRandoms n (mkStdGen 42)
-   in map toEnum randoms
+generatePassword :: Int -> (Char, Char) -> IO String
+generatePassword n (min, max) = do
+  gen <- getStdGen
+  return (take n $ randomRs (min, max) gen)
