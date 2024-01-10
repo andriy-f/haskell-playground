@@ -16,11 +16,15 @@ main = do
   putStrLn "Welcome to randomization app"
   putStrLn "Enter lenght of pass to generate:"
   numberStr <- getLine
-  let number = read numberStr :: Int
-  gen <- getStdGen
-  let res = generatePassword number ('A', 'z') gen
-
-  putStrLn ("Result: " ++ show res)
+  let readsRes = reads numberStr :: [(Int, String)]
+  if (length readsRes == 0) then do
+    putStrLn "Invalid input"
+  else do
+    putStrLn "Generating password..."
+    gen <- getStdGen
+    let number = fst $ head readsRes
+    let res = generatePassword number ('A', 'z') gen
+    putStrLn ("Result: " ++ show res)
 
 -- get infinite list of randoms [a] from a seed g
 getRandoms :: (Random a, RandomGen g) => g -> [a]
