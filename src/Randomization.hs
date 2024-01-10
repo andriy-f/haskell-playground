@@ -18,7 +18,7 @@ main = do
   numberStr <- getLine
   let number = read numberStr :: Int
   gen <- getStdGen
-  let res = generatePassword number ('0', '9') gen
+  let res = generatePassword number ('A', 'z') gen
 
   putStrLn ("Result: " ++ show res)
 
