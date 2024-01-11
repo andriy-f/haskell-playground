@@ -2,17 +2,80 @@ module Main where
 
 import Control.Monad (forM, forever, mapM, when)
 import Data.Char (toUpper)
-import Data.List (delete)
+import Data.List (delete, elemIndex, find)
 import PlayTypes (Vector3D (..), vPlus)
-import System.IO (IOMode (ReadMode, WriteMode), hClose,
-  hGetContents, openFile, withFile)
-import System.Environment (getArgs, getProgName)
-import System.Directory (renameFile, removeFile, doesFileExist)
-
-import qualified Todos
 import qualified Randomization
+import System.Directory (doesFileExist, removeFile, renameFile)
+import System.Environment (getArgs, getProgName)
+import System.IO
+  ( IOMode (ReadMode, WriteMode),
+    hClose,
+    hGetContents,
+    openFile,
+    withFile,
+  )
+import qualified Todos
 
-main = Randomization.main
+main = main2
+
+main2 = do
+  args <- getArgs
+  let parseRes = parseArgs args
+  if null parseRes
+    then showHelp
+    else dispatch (head parseRes)
+
+showHelp = do
+  putStrLn "Usage:"
+  putStrLn "  -h - show help"
+  putStrLn "  -i - interactive mode"
+  putStrLn "  -sr <subprogram> - run subprogram <subprogram>"
+
+dispatch :: (String, ArgValue) -> IO ()
+dispatch ("-h", _) = showHelp
+dispatch ("-i", _) = interactiveMode
+
+dispatcch ("-sr", ToFill) = do
+  putStrLn "Subprogram not filled, Usage:  -sr <subprogram> - run subprogram <subprogram>"
+dispatcch ("-sr", Value a) = do
+  putStrLn "Running subprogram, this is TODO" -- ++ show a
+
+data ArgValue = NoValue | Value String | ToFill deriving (Show, Eq)
+
+parseArgs :: [String] -> [(String, ArgValue)]
+parseArgs args =
+  let argWithNoValue x = x `elem` ["-h", "-i"]
+      argWithValue x = (x == "-sr")
+   in foldl
+        ( \acc arg ->
+            if not (null acc) && snd (head acc) == ToFill
+              then (fst $ head acc, Value arg) : tail acc -- fill value of previously found arg
+              else
+                if argWithNoValue arg
+                  then (arg, NoValue) : acc -- arg with no expected value
+                  else
+                    if argWithValue arg
+                      then (arg, ToFill) : acc -- arg with flag that it must be filled later
+                      else acc -- actuelly this is some errorneous situation
+        )
+        []
+        args
+
+interactiveMode = do
+  putStrLn "Interactive mode"
+  putStrLn "Commands:"
+  putStrLn "1. exit - exit interactive mode"
+  putStrLn "2. todo - run todo app"
+  putStrLn "3. randoms - run randoms app"
+  putStrLn "Enter command number (1,2,...):"
+  command <- getLine
+  case command of
+    "1" -> return ()
+    "2" -> Todos.main
+    "3" -> Randomization.main
+    _ -> do
+      putStrLn $ "Unknown command: " ++ command ++ "\n"
+      interactiveMode
 
 vectorAddingIO = do
   putStrLn "Enter 3 Numbers for 3D Vector #1:"
@@ -166,10 +229,11 @@ todoRoutineIO = do
 todoEditorIO = do
   let todoFileName = "todos.txt"
   fileExist <- doesFileExist todoFileName
-  if fileExist then do
-    oldContent <- readFile todoFileName
-    putStrLn $ "These are your TO-DO items:\n" ++ addLineNumbers oldContent
-  else writeFile todoFileName ""
+  if fileExist
+    then do
+      oldContent <- readFile todoFileName
+      putStrLn $ "These are your TO-DO items:\n" ++ addLineNumbers oldContent
+    else writeFile todoFileName ""
   forever $ do
     putStrLn "What do you want to do next? (add / remove / print / exit)"
     command <- getLine
@@ -182,11 +246,10 @@ todoEditorIO = do
         putStrLn "Enter the number of item to remove:"
         numberString <- getLine
         oldContent <- readFile todoFileName
-        let
-          number = read numberString
-          oldTodos = lines oldContent
-          newTodos = delete (oldTodos !! number) oldTodos
-          newContent = unlines newTodos
+        let number = read numberString
+            oldTodos = lines oldContent
+            newTodos = delete (oldTodos !! number) oldTodos
+            newContent = unlines newTodos
         writeFile (todoFileName ++ ".new") newContent
         renameFile (todoFileName ++ ".new") todoFileName
       "print" -> do
@@ -196,10 +259,9 @@ todoEditorIO = do
       _ -> putStrLn "Unknown command"
 
 addLineNumbers contents =
-  let
-    list = lines contents
-    newList = zipWith (\n line -> show n ++ ". " ++ line) [0..] list
-  in unlines newList
+  let list = lines contents
+      newList = zipWith (\n line -> show n ++ ". " ++ line) [0 ..] list
+   in unlines newList
 
 getProgramInfo = do
   args <- getArgs
