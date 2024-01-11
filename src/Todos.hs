@@ -1,15 +1,25 @@
-module Todos (main) where
+module Todos (mainInteractive) where
 
-import Data.List (lookup, delete)
-import System.Environment (getArgs)
+import Data.List (delete, lookup)
 import System.Directory (renameFile)
+import System.Environment (getArgs)
 
-main = do
-  putStrLn "Welcome to todos app"
+mainNonInteractive = do
   (command : args) <- getArgs
   let maybeAction = lookup command dispatch
       action = getActionOrDefault maybeAction
   action args
+
+mainInteractive = do
+  putStrLn "Welcome to todos app"
+  putStrLn "Commands:"
+  putStrLn "  view - view todos"
+  putStrLn "  add - add todo"
+  putStrLn "  remove - remove todo"
+  putStrLn "  help - show help"
+  putStrLn "Enter command:"
+  command <- getLine
+  putStrLn "Todo"
 
 dispatch :: [(String, [String] -> IO ())]
 dispatch =
