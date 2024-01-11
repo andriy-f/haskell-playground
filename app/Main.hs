@@ -65,13 +65,13 @@ interactiveMode = do
   putStrLn "Interactive mode"
   putStrLn "Commands:"
   putStrLn "1. exit - exit interactive mode"
-  putStrLn "2. todo - run todo app"
+  putStrLn "2. capslocker"
   putStrLn "3. randoms - run randoms app"
   putStrLn "Enter command number (1,2,...):"
   command <- getLine
   case command of
     "1" -> return ()
-    "2" -> Todos.main
+    "2" -> capsLockerIOV2
     "3" -> Randomization.main
     _ -> do
       putStrLn $ "Unknown command: " ++ command ++ "\n"
