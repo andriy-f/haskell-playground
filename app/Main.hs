@@ -6,6 +6,7 @@ import Data.List (delete, elemIndex, find)
 import MyByteStrings (myCopyFile)
 import PlayTypes (Vector3D (..), vPlus)
 import qualified Randomization
+import qualified RPN
 import System.Directory (doesFileExist, removeFile, renameFile)
 import System.Environment (getArgs, getProgName)
 import System.IO
@@ -69,6 +70,7 @@ interactiveMode = do
   putStrLn "2. capslocker"
   putStrLn "3. randoms - run randoms app"
   putStrLn "4. copyfile - copy file from source to destination"
+  putStrLn "5. rpn - calculate Reverse Polish Notation expression"
   putStrLn "Enter command number (1,2,...):"
   command <- getLine
   case command of
@@ -76,6 +78,7 @@ interactiveMode = do
     "2" -> capsLockerIOV2
     "3" -> Randomization.main
     "4" -> copyFileInteractive
+    "5" -> rpnInteractive
     _ -> do
       putStrLn $ "Unknown command: " ++ command ++ "\n"
       interactiveMode
@@ -100,6 +103,11 @@ copyFileInteractive = do
   putStrLn "Enter destination file name:"
   dest <- getLine
   myCopyFile source dest
+
+rpnInteractive = do
+  putStrLn "Enter RPN expression:"
+  expr <- getLine
+  putStrLn $ "Result: " ++ show (RPN.rpn expr)
 
 wordReversingIO = do
   putStrLn "Enter a sentence to reverse:"
