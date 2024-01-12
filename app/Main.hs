@@ -3,6 +3,7 @@ module Main where
 import Control.Monad (forM, forever, mapM, when)
 import Data.Char (toUpper)
 import Data.List (delete, elemIndex, find)
+import MyByteStrings (myCopyFile)
 import PlayTypes (Vector3D (..), vPlus)
 import qualified Randomization
 import System.Directory (doesFileExist, removeFile, renameFile)
@@ -67,12 +68,14 @@ interactiveMode = do
   putStrLn "1. exit - exit interactive mode"
   putStrLn "2. capslocker"
   putStrLn "3. randoms - run randoms app"
+  putStrLn "4. copyfile - copy file from source to destination"
   putStrLn "Enter command number (1,2,...):"
   command <- getLine
   case command of
     "1" -> return ()
     "2" -> capsLockerIOV2
     "3" -> Randomization.main
+    "4" -> copyFileInteractive
     _ -> do
       putStrLn $ "Unknown command: " ++ command ++ "\n"
       interactiveMode
@@ -90,6 +93,13 @@ vectorAddingIO = do
   let v1 = Vector3D (read x1) (read y1) (read z1)
       v2 = Vector3D (read x2) (read y2) (read z2)
    in print (vPlus v1 v2)
+
+copyFileInteractive = do
+  putStrLn "Enter source file name:"
+  source <- getLine
+  putStrLn "Enter destination file name:"
+  dest <- getLine
+  myCopyFile source dest
 
 wordReversingIO = do
   putStrLn "Enter a sentence to reverse:"
