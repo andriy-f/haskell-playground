@@ -1,4 +1,4 @@
-module Heathrow2London where
+module Heathrow2London (getHeathrow2LondonMinPathLength) where
 
 import Data.List (foldl1', minimumBy)
 
