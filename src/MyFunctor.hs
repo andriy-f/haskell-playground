@@ -8,23 +8,23 @@ import BinaryTreeModule (BinaryTree(..))
 -- (a -> b) is a function
 -- (f a), (f b) are concrete types
 class MyFunctor f where
-  fMap :: (a -> b) -> f a -> f b
+  myFMap :: (a -> b) -> f a -> f b
 
 instance MyFunctor Maybe where
-  fMap f (Just x) = Just (f x)
-  fMap f Nothing = Nothing
+  myFMap f (Just x) = Just (f x)
+  myFMap f Nothing = Nothing
 
 -- Here [] is a type constructor for lists
 instance MyFunctor [] where
-  fMap = map
+  myFMap = map
 
 instance MyFunctor BinaryTree where
-  fMap f EmptyTree = EmptyTree
-  fMap f (Node x left right) = Node (f x) (fMap f left) (fMap f right)
+  myFMap f EmptyTree = EmptyTree
+  myFMap f (Node x left right) = Node (f x) (myFMap f left) (myFMap f right)
 
 instance MyFunctor (Either a) where
-  fMap f (Right x) = Right (f x)
-  fMap f (Left x) = Left x
+  myFMap f (Right x) = Right (f x)
+  myFMap f (Left x) = Left x
 
 instance MyFunctor (Map.Map k) where
-  fMap = Map.map
+  myFMap = Map.map
