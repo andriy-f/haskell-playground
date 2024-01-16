@@ -1,8 +1,7 @@
 module MyFunctor where
 
+import BinaryTreeModule (BinaryTree (..))
 import qualified Data.Map as Map
-
-import BinaryTreeModule (BinaryTree(..))
 
 -- f is not concrete type but type constructor
 -- (a -> b) is a function
@@ -28,3 +27,8 @@ instance MyFunctor (Either a) where
 
 instance MyFunctor (Map.Map k) where
   myFMap = Map.map
+
+instance MyFunctor IO where
+  myFMap f action = do
+    result <- action
+    return (f result)
