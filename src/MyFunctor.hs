@@ -35,4 +35,4 @@ instance MyFunctor IO where
 
 -- (->) r is a type constructor for functions (r is first argument)
 instance MyFunctor ((->) r) where
-  myFMap f a = f . a
+  myFMap f a = f . a -- or just myFMap = (.)
