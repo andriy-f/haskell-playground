@@ -36,3 +36,15 @@ instance MyFunctor IO where
 -- (->) r is a type constructor for functions (r is first argument)
 instance MyFunctor ((->) r) where
   myFMap f a = f . a -- or just myFMap = (.)
+
+applicativeFunctorExample :: IO ()
+applicativeFunctorExample = do
+  line <- getLine
+  let line' = reverse line
+  putStrLn $ "You said " ++ line' ++ " backwards!"
+  putStrLn $ "Yes, you really said " ++ line' ++ " backwards!"
+
+applicativeFunctorExample2 =
+  let funArr = fmap (*) [1, 2, 3, 4]
+      result = fmap (\f -> f 9) funArr
+  in result
