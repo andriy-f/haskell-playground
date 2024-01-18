@@ -56,11 +56,25 @@ class (Functor f) => MyApplicative f where
 -- mySuperMap is like <*>
 instance MyApplicative Maybe where
   myPure = Just
-  mySuperMap (Nothing) _ = Nothing
+  mySuperMap Nothing _ = Nothing
   mySuperMap (Just a) something = fmap a something
 
 instance MyApplicative ((->) r) where
   myPure x = (\_ -> x)
   mySuperMap f g = \x -> f x (g x)
 
+-- mySuperMap is like <*>
+liftA2 :: (Applicative f) => (a -> b -> c) -> f a -> f b -> f c
+liftA2 f a b = f <$> a <*> b
+
+sequenceA' :: (Applicative f) => [f a] -> f [a]
+sequenceA' [] = pure []
+sequenceA' (x : xs) = (:) <$> x <*> sequenceA' xs
+
+sequenceA'' :: (Applicative f) => [f a] -> f [a]
+sequenceA'' = foldr (liftA2 (:)) (pure [])
+
 applicativeFunctorExample = mySuperMap (Just (* 2)) (Just 2)
+
+-- + is applied to results of (+3) and (*4)
+applicativeFunctorExample2 = (+) <$> (+ 3) <*> (* 4) $ 5
