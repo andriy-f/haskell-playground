@@ -73,3 +73,10 @@ data Barry t k p = Barry {yabba :: p, dabba :: t k}
 
 instance Functor (Barry a b) where
   fmap f (Barry {yabba = x, dabba = y}) = Barry {yabba = f x, dabba = y}
+
+newtype CharList = CharList {getCharList :: [Char]} deriving (Eq, Show)
+
+newtype Pair b a = Pair {getPair :: (a, b)}
+
+instance Functor (Pair c) where
+  fmap f (Pair (x, y)) = Pair (f x, y)
