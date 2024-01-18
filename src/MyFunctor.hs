@@ -37,14 +37,30 @@ instance MyFunctor IO where
 instance MyFunctor ((->) r) where
   myFMap f a = f . a -- or just myFMap = (.)
 
-applicativeFunctorExample :: IO ()
-applicativeFunctorExample = do
+functorExample :: IO ()
+functorExample = do
   line <- getLine
   let line' = reverse line
   putStrLn $ "You said " ++ line' ++ " backwards!"
   putStrLn $ "Yes, you really said " ++ line' ++ " backwards!"
 
-applicativeFunctorExample2 =
+functorExample2 =
   let funArr = fmap (*) [1, 2, 3, 4]
       result = fmap (\f -> f 9) funArr
-  in result
+   in result
+
+class (Functor f) => MyApplicative f where
+  myPure :: a -> f a
+  mySuperMap :: f (a -> b) -> f a -> f b
+
+-- mySuperMap is like <*>
+instance MyApplicative Maybe where
+  myPure = Just
+  mySuperMap (Nothing) _ = Nothing
+  mySuperMap (Just a) something = fmap a something
+
+instance MyApplicative ((->) r) where
+  myPure x = (\_ -> x)
+  mySuperMap f g = \x -> f x (g x)
+
+applicativeFunctorExample = mySuperMap (Just (* 2)) (Just 2)
