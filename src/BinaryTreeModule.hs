@@ -1,5 +1,7 @@
 module BinaryTreeModule (BinaryTree (..), singleton, treeInsert, treeElem) where
 
+import qualified Data.Foldable as F
+
 data BinaryTree a = EmptyTree | Node a (BinaryTree a) (BinaryTree a) deriving (Show, Read, Eq)
 
 -- Single-element tree
@@ -19,3 +21,10 @@ treeElem x (Node a left right)
   | x == a = True
   | x < a = treeElem x left
   | x > a = treeElem x right
+
+instance F.Foldable BinaryTree where
+  foldMap f EmptyTree = mempty
+  foldMap f (Node x left right) =
+    F.foldMap f left
+      `mappend` f x
+      `mappend` F.foldMap f right
