@@ -45,3 +45,9 @@ moveKnight (c, r) = do
       ]
   guard (c' `elem` [1 .. 8] && r' `elem` [1 .. 8])
   return (c', r')
+
+knightIn3 :: KnightPos -> [KnightPos]
+knightIn3 start = [start] >>= moveKnight >>= moveKnight >>= moveKnight
+
+canKnightIn3 :: KnightPos -> KnightPos -> Bool
+canKnightIn3 start end = end `elem` knightIn3 start
