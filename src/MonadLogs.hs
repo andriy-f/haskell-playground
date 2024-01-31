@@ -1,4 +1,11 @@
-module MonadLogs (applyLog, applyLog2, applyLog3, addDrink) where
+module MonadLogs
+  ( applyLog,
+    applyLog2,
+    applyLog3,
+    addDrink,
+    addDrinkMultiple,
+  )
+where
 
 import Data.Monoid (Sum)
 
@@ -29,3 +36,6 @@ addDrink _ = ("borjomi", 30)
 -- addDrink ad
 addDrink2beans :: (Food, Price)
 addDrink2beans = ("beans", 10) `applyLog3` addDrink
+
+addDrinkMultiple :: (Food, Price)
+addDrinkMultiple = ("beans", 10) `applyLog3` addDrink `applyLog3` addDrink `applyLog3` addDrink
