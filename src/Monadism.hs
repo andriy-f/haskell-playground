@@ -67,3 +67,12 @@ instance (Monoid w) => Monad (MyWriter w) where
   (MyWriter (x, v)) >>= f =
     let (MyWriter (y, v')) = f x
      in MyWriter (y, v `mappend` v')
+
+myWriterUsage :: (Int, String)
+myWriterUsage = runMyWriter $ do
+  x <- MyWriter (1, "hello")
+  y <- MyWriter (2, " world")
+  return (x + y)
+
+myWriterUsage' :: (Int, String)
+myWriterUsage' = runMyWriter $ MyWriter (1, "hello") >>= (\x -> MyWriter (2, " world") >>= (\y -> return (x + y)))
