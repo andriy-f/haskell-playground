@@ -1,6 +1,7 @@
 module Monadism where
 
-import Control.Monad (MonadPlus (mzero))
+import Control.Monad (Monad (return, (>>=)), MonadPlus (mzero))
+import Data.Monoid (Monoid (mappend, mempty))
 
 listOfTuples :: [(Int, Char)]
 listOfTuples = do
@@ -51,3 +52,18 @@ knightIn3 start = [start] >>= moveKnight >>= moveKnight >>= moveKnight
 
 canKnightIn3 :: KnightPos -> KnightPos -> Bool
 canKnightIn3 start end = end `elem` knightIn3 start
+
+newtype MyWriter w a = MyWriter {runMyWriter :: (a, w)}
+
+instance Functor (MyWriter w) where
+  fmap f (MyWriter (x, v)) = MyWriter (f x, v)
+
+instance (Monoid w) => Applicative (MyWriter w) where
+  pure x = MyWriter (x, mempty)
+  (MyWriter (f, v)) <*> (MyWriter (x, v')) = MyWriter (f x, v `mappend` v')
+
+instance (Monoid w) => Monad (MyWriter w) where
+  return = pure
+  (MyWriter (x, v)) >>= f =
+    let (MyWriter (y, v')) = f x
+     in MyWriter (y, v `mappend` v')
