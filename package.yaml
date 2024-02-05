@@ -26,6 +26,7 @@ dependencies:
 - random
 - bytestring
 - time
+- mtl
 
 library:
   source-dirs: src

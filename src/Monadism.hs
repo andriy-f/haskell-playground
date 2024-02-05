@@ -1,6 +1,7 @@
 module Monadism where
 
 import Control.Monad (Monad (return, (>>=)), MonadPlus (mzero))
+import Control.Monad.Writer (Writer, runWriter, tell, writer)
 import Data.Monoid (Monoid (mappend, mempty))
 
 listOfTuples :: [(Int, Char)]
@@ -76,3 +77,21 @@ myWriterUsage = runMyWriter $ do
 
 myWriterUsage' :: (Int, String)
 myWriterUsage' = runMyWriter $ MyWriter (1, "hello") >>= (\x -> MyWriter (2, " world") >>= (\y -> return (x + y)))
+
+getSomeString :: String
+getSomeString = "This is some string"
+
+getLengthWithLog :: String -> Writer [String] Int
+getLengthWithLog s = writer (length s, ["Counted the characters in the string"])
+
+evaluateStrLenghtWithLog :: Int -> Writer [String] String
+evaluateStrLenghtWithLog n = do
+  let evaluation = if n > 10 then "String is long" else "String is short"
+  writer (evaluation, ["Evaluated the length of the string."])
+
+theirWriterUsage = runWriter $ do
+  getLengthWithLog getSomeString
+  len <- getLengthWithLog getSomeString
+  evaluateStrLenghtWithLog len
+
+theirWriterUsage' = runWriter $ getLengthWithLog getSomeString >>= evaluateStrLenghtWithLog
