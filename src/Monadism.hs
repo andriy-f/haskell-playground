@@ -90,8 +90,9 @@ evaluateStrLenghtWithLog n = do
   writer (evaluation, ["Evaluated the length of the string."])
 
 theirWriterUsage = runWriter $ do
-  getLengthWithLog getSomeString
+  tell ["Before got the length of the string"]
   len <- getLengthWithLog getSomeString
+  tell ["After got the length of the string"]
   evaluateStrLenghtWithLog len
 
 theirWriterUsage' = runWriter $ getLengthWithLog getSomeString >>= evaluateStrLenghtWithLog
