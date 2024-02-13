@@ -35,7 +35,7 @@ countWithoutDiffList n = do
   countWithoutDiffList (n - 1)
   tell [show n]
 
--- For performance showcase
+-- For performance showcase (slower)
 runCountWithoutDiffList = mapM_ putStrLn . snd . runWriter $ countWithoutDiffList 500000
 
 countWithDiffList :: Int -> Writer (MyDiffList String) ()
@@ -45,5 +45,5 @@ countWithDiffList n = do
   countWithDiffList (n - 1)
   tell $ toMyDiffList [show (n - 1)]
 
--- For performance showcase
+-- For performance showcase (faster)
 runCountWithDiffList = mapM_ putStrLn . fromMyDiffList . snd . runWriter $ countWithDiffList 500000
