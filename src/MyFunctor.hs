@@ -78,3 +78,25 @@ applicativeFunctorExample = mySuperMap (Just (* 2)) (Just 2)
 
 -- + is applied to results of (+3) and (*4)
 applicativeFunctorExample2 = (+) <$> (+ 3) <*> (* 4) $ 5
+
+-- newtype MyFunFunctor = (->) r
+
+funcFunctorSample =
+  let f = (* 3)
+      g = (+ 3)
+      -- g is Functor, fmap f over g means applying function f over Functor g
+      -- Functor is things which can be mapped over. fmap f g produces new Functor
+      r = fmap f g
+   in r 8
+
+functorExample3 :: (->) Int Float -> Bool
+functorExample3 f = f 6 < 1
+
+funcFunctorSample2 =
+  let -- f means functor, f is (->) Int
+      -- is f Float | f is (->) Int
+      functor1 = (\x -> fromIntegral x / 10) :: Int -> Float
+      mapping = (< 1.0) :: Float -> Bool
+      -- is f Bool | f is (->) Int
+      functor2 = fmap mapping functor1 :: Int -> Bool
+   in functor2
