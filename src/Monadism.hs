@@ -100,6 +100,7 @@ theirWriterUsage' = runWriter $ getLengthWithLog getSomeString >>= evaluateStrLe
 functionAsApplicativeFunctorExample = (+) <$> (* 2) <*> (+ 10)
 
 -- (->) r is Monad as well as functor and applicative functor
+-- this is function monad and is reader monad
 functionAsMonadExample = do
   x <- (* 2)
   y <- (+ 10)
