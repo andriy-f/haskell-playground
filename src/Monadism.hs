@@ -96,3 +96,9 @@ theirWriterUsage = runWriter $ do
   evaluateStrLenghtWithLog len
 
 theirWriterUsage' = runWriter $ getLengthWithLog getSomeString >>= evaluateStrLenghtWithLog
+
+-- (->) r is Monad as well as functor and applicative functor
+functionAsMonadExample = do
+  x <- (* 3)
+  y <- (+ 10)
+  return (x + y)
