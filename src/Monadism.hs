@@ -97,6 +97,10 @@ theirWriterUsage = runWriter $ do
 
 theirWriterUsage' = runWriter $ getLengthWithLog getSomeString >>= evaluateStrLenghtWithLog
 
+instance MyMonad ((->) r) where
+    return x = \_ -> x
+    h >>= f = \w -> f (h w) w
+
 -- (->) r is Monad as well as functor and applicative functor
 functionAsMonadExample = do
   x <- (* 3)
