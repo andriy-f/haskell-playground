@@ -97,12 +97,16 @@ theirWriterUsage = runWriter $ do
 
 theirWriterUsage' = runWriter $ getLengthWithLog getSomeString >>= evaluateStrLenghtWithLog
 
-instance MyMonad ((->) r) where
-    return x = \_ -> x
-    h >>= f = \w -> f (h w) w
+functionAsApplicativeFunctorExample = (+) <$> (* 2) <*> (+ 10)
 
 -- (->) r is Monad as well as functor and applicative functor
 functionAsMonadExample = do
-  x <- (* 3)
+  x <- (* 2)
   y <- (+ 10)
   return (x + y)
+
+-- ... function monad is called reader monad
+functionAsRegularExample x =
+  let a = (* 2) x
+      b = (+ 10) x
+   in a + b
