@@ -93,7 +93,10 @@ functorExample3 :: (->) Int Float -> Bool
 functorExample3 f = f 6 < 1
 
 funcFunctorSample2 =
-  let -- f means functor, f is (->) Int
+  let -- f means functor, f is (->) Int, function whose argument is Int
+      -- and it has result value
+      -- context is applying something to Int
+      -- value is result of function
       -- is f Float | f is (->) Int
       functor1 = (\x -> fromIntegral x / 10) :: Int -> Float
       mapping = (< 1.0) :: Float -> Bool
